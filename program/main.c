@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include "mean.h"
+
 int main() 
 {
     int x;
