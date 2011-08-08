@@ -1,0 +1,10 @@
+Playground  project to try some bits and pieces 
+related to some thigs I've to deal with from time to time ;-)
+
+Currently including
+
+* CMake (as the build system)
+* C / C++ (static and dynamic libraries)
+* ....
+
+
