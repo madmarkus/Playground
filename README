@@ -5,6 +5,14 @@ Currently including
 
 * CMake (as the build system)
 * C / C++ (static and dynamic libraries)
+* using Qt (with CMake)
+* use C library within C++ / Qt project
 * ....
+
+
+Useful links:
+* http://developer.qt.nokia.com/quarterly/view/using_cmake_to_build_qt_projects
+* 
+* http://www.parashift.com/c++-faq-lite/mixing-c-and-cpp.html
 
 
