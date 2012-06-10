@@ -1,4 +1,5 @@
 #include <QtGui>
+#include <iostream>
 
 extern "C" {
 	#include "mean.h"
@@ -10,57 +11,76 @@ extern "C" {
 FindDialog::FindDialog(QWidget *parent)
      : QDialog(parent)
 {
-    label = new QLabel(tr("Find &what:"));
-    lineEdit = new QLineEdit;
-    label->setBuddy(lineEdit);
+    lineEditFirst = new QLineEdit;
+    labelFirst    = new QLabel(tr("F&irst Number:"));
+    labelFirst->setBuddy(lineEditFirst);
+    connect(lineEditFirst, SIGNAL(textChanged(const QString &)),
+           this, SLOT(enableFindButton()));
 
-    caseCheckBox = new QCheckBox(tr("Match &case"));
-    backwardCheckBox = new QCheckBox(tr("Search &backward"));
+    lineEditSecond = new QLineEdit;
+    labelSecond    = new QLabel(tr("&Second Number:"));
+    labelSecond->setBuddy(lineEditSecond);
+    connect(lineEditSecond, SIGNAL(textChanged(const QString &)),
+           this, SLOT(enableFindButton()));
 
-    findButton = new QPushButton(tr("&Find"));
-    findButton->setDefault(true);
-    findButton->setEnabled(false);
-
+    calcButton = new QPushButton(tr("&Calc"));
+    calcButton->setDefault(true);
+    calcButton->setEnabled(false);
+    connect(calcButton, SIGNAL(clicked()),
+           this, SLOT(findClicked()));
 
     closeButton = new QPushButton(tr("Close"));
-   
-    connect(lineEdit, SIGNAL(textChanged(const QString &)),
-           this, SLOT(enableFindButton(const QString &)));
-   connect(findButton, SIGNAL(clicked()),
-           this, SLOT(findClicked()));
-   connect(closeButton, SIGNAL(clicked()),
+    connect(closeButton, SIGNAL(clicked()),
            this, SLOT(close()));
 
     QHBoxLayout *topLeftLayout = new QHBoxLayout;
-    topLeftLayout->addWidget(label);
-    topLeftLayout->addWidget(lineEdit);
+    topLeftLayout->addWidget(labelFirst);
+    topLeftLayout->addWidget(lineEditFirst);
+
+    QHBoxLayout *bottomleftLayout = new QHBoxLayout;
+    bottomleftLayout->addWidget(labelSecond);
+    bottomleftLayout->addWidget(lineEditSecond);
 
     QVBoxLayout *leftLayout = new QVBoxLayout;
     leftLayout->addLayout(topLeftLayout);
-    leftLayout->addWidget(caseCheckBox);
-    leftLayout->addWidget(backwardCheckBox);
+    leftLayout->addLayout(bottomleftLayout);
 
     QVBoxLayout *rightLayout = new QVBoxLayout;
-    rightLayout->addWidget(findButton);
+    rightLayout->addWidget(calcButton);
     rightLayout->addWidget(closeButton);
     rightLayout->addStretch();
 
     QHBoxLayout *mainLayout = new QHBoxLayout;
     mainLayout->addLayout(leftLayout);
     mainLayout->addLayout(rightLayout);
+
     setLayout(mainLayout);
-    setWindowTitle(tr("Find"));
+    setWindowTitle(tr("Mean"));
     setFixedHeight(sizeHint().height());
 }
 
-void FindDialog::enableFindButton(const QString &text)
+void FindDialog::enableFindButton()
 {
-    findButton->setEnabled(!text.isEmpty());
+    int length1 = lineEditFirst->text().length();
+    int length2 = lineEditSecond->text().length();
+
+    calcButton->setEnabled( length1 != 0 && length2 != 0 );
 }
 
 void FindDialog::findClicked()
 {
-    QLabel *label = new QLabel(tr("not found. <br />But I've a number for you: %1").arg( mean(5,8) ));
-    label->show();
+    int a = atoi(lineEditFirst->text().toLocal8Bit().constData());
+    int b = atoi(lineEditSecond->text().toLocal8Bit().constData());
+
+    QString message = QString("The mean between %1 and %2 is %3").arg(a).arg(b).arg(mean(a,b));
+    QMessageBox box;
+
+    box.setWindowTitle("The Mean");
+    box.setText(message);
+
+    box.addButton(QMessageBox::Ok);
+    box.addButton(QMessageBox::Cancel);
+
+    box.exec();
 }
 
