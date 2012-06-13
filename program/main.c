@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "mean.h"
+#include <mean.h>
 
 int main() 
 {

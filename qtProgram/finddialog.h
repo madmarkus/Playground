@@ -23,14 +23,14 @@ signals:
 
 private slots:
      void findClicked();
-     void enableFindButton(const QString &text);
+     void enableFindButton();
 
 private:
-     QLabel *label;
-     QLineEdit *lineEdit;
-     QCheckBox *caseCheckBox;
-     QCheckBox *backwardCheckBox;
-     QPushButton *findButton;
+     QLabel *labelFirst;
+     QLineEdit *lineEditFirst;
+     QLabel *labelSecond;
+     QLineEdit *lineEditSecond;
+     QPushButton *calcButton;
      QPushButton *closeButton;
 };
 

@@ -6,4 +6,12 @@ install_manifest.txt
 *.so
 *.a
 Experiment
-
+.DS*
+.idea
+Build
+*.config
+*.creator
+*.files
+*.includes
+*.autosave
+*.user

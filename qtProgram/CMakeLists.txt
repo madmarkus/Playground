@@ -21,4 +21,4 @@ include_directories(../libMean)
 
 add_executable(QtProgram ${qtProgram_SOURCES} ${qtProgram_HEADERS_MOC})
 
-target_link_libraries(QtProgram mean ${QT_LIBRARIES})
+target_link_libraries(QtProgram means ${QT_LIBRARIES})
