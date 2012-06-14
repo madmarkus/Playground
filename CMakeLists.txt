@@ -6,3 +6,4 @@ add_subdirectory(program)
 add_subdirectory(qtProgram)
 
 add_dependencies(Experiment mean)
+add_dependencies(QtProgram means)
